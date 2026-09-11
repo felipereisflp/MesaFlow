@@ -21,15 +21,15 @@ export const getMyContext = createServerFn({ method: "POST" })
       .select("role")
       .eq("user_id", userId);
 
-    let tenant: { id: string; name: string; brand_color: string; service_fee_pct: number } | null =
-      null;
+    type Tenant = { id: string; name: string; brand_color: string; service_fee_pct: number };
+    let tenant: Tenant | null = null;
     if (tenantId) {
       const { data } = await supabaseAdmin
         .from("tenants")
         .select("id, name, brand_color, service_fee_pct")
         .eq("id", tenantId)
         .maybeSingle();
-      tenant = (data as typeof tenant) ?? null;
+      tenant = (data as Tenant | null) ?? null;
     }
 
     return {
