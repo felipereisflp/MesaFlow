@@ -30,7 +30,7 @@ export const listTables = createServerFn({ method: "POST" })
         .neq("status", "REVOKED"),
     ]);
 
-    const byTable = new Map<string, (typeof tags extends null ? never : NonNullable<typeof tags>)[number]>();
+    const byTable = new Map<string, NonNullable<typeof tags>[number]>();
     for (const t of tags ?? []) byTable.set(t.table_id as string, t);
 
     return (tables ?? []).map((t) => {
