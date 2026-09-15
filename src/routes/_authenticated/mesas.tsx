@@ -40,7 +40,7 @@ export const Route = createFileRoute("/_authenticated/mesas")({
       { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
-  component: Mesas;
+  component: Mesas,
 });
 
 function Mesas() {
