@@ -1,8 +1,8 @@
 import { useState } from "react";
-import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import { createFileRoute } from "@tanstack/react-router";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useServerFn } from "@tanstack/react-start";
-import { supabase } from "@/integrations/supabase/client";
+import { StaffHeader } from "@/components/StaffHeader";
 import { getMyContext } from "@/lib/me.functions";
 import {
   addTeamMember,
@@ -25,7 +25,7 @@ import {
 } from "@/components/ui/select";
 import { Skeleton } from "@/components/ui/skeleton";
 import { toast } from "sonner";
-import { LogOut, UserPlus, Trash2 } from "lucide-react";
+import { UserPlus, Trash2 } from "lucide-react";
 
 export const Route = createFileRoute("/_authenticated/painel")({
   head: () => ({
@@ -58,30 +58,14 @@ const ROLES = [
 type Role = (typeof ROLES)[number]["value"] | "owner";
 
 function Painel() {
-  const navigate = useNavigate();
   const qc = useQueryClient();
   const fetchMe = useServerFn(getMyContext);
 
   const me = useQuery({ queryKey: ["me"], queryFn: () => fetchMe({ data: undefined }) });
 
-  async function sair() {
-    await supabase.auth.signOut();
-    qc.clear();
-    navigate({ to: "/auth" });
-  }
-
   return (
     <div className="min-h-screen bg-background">
-      <header className="border-b border-border">
-        <div className="mx-auto flex max-w-5xl items-center justify-between px-6 py-4">
-          <span className="font-display text-lg font-bold tracking-tight text-foreground">
-            Mesa<span className="text-primary">Flow</span>
-          </span>
-          <Button variant="ghost" size="sm" onClick={sair}>
-            <LogOut className="mr-2 h-4 w-4" /> Sair
-          </Button>
-        </div>
-      </header>
+      <StaffHeader />
 
       <main className="mx-auto max-w-5xl space-y-6 px-6 py-8">
         {me.isLoading ? (

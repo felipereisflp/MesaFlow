@@ -188,9 +188,9 @@ export const setProductState = createServerFn({ method: "POST" })
   )
   .handler(async ({ data, context }) => {
     const { admin, tenantId } = await requireRoles(context.userId, MANAGERS);
-    const patch: Record<string, boolean> = {};
-    if (typeof data.available === "boolean") patch["available"] = data.available;
-    if (typeof data.archived === "boolean") patch["archived"] = data.archived;
+    const patch: { available?: boolean; archived?: boolean } = {};
+    if (typeof data.available === "boolean") patch.available = data.available;
+    if (typeof data.archived === "boolean") patch.archived = data.archived;
     if (Object.keys(patch).length === 0) return { ok: true };
 
     const { error } = await admin
