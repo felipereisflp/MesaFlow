@@ -13,6 +13,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AuthenticatedCardapioRouteImport } from './routes/_authenticated/cardapio'
+import { Route as AuthenticatedMesasRouteImport } from './routes/_authenticated/mesas'
 import { Route as AuthenticatedPainelRouteImport } from './routes/_authenticated/painel'
 
 const IndexRoute = IndexRouteImport.update({
@@ -34,6 +35,11 @@ const AuthenticatedCardapioRoute = AuthenticatedCardapioRouteImport.update({
   path: '/cardapio',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedMesasRoute = AuthenticatedMesasRouteImport.update({
+  id: '/mesas',
+  path: '/mesas',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 const AuthenticatedPainelRoute = AuthenticatedPainelRouteImport.update({
   id: '/painel',
   path: '/painel',
@@ -44,12 +50,14 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/cardapio': typeof AuthenticatedCardapioRoute
+  '/mesas': typeof AuthenticatedMesasRoute
   '/painel': typeof AuthenticatedPainelRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/cardapio': typeof AuthenticatedCardapioRoute
+  '/mesas': typeof AuthenticatedMesasRoute
   '/painel': typeof AuthenticatedPainelRoute
 }
 export interface FileRoutesById {
@@ -58,19 +66,21 @@ export interface FileRoutesById {
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/auth': typeof AuthRoute
   '/_authenticated/cardapio': typeof AuthenticatedCardapioRoute
+  '/_authenticated/mesas': typeof AuthenticatedMesasRoute
   '/_authenticated/painel': typeof AuthenticatedPainelRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/auth' | '/cardapio' | '/painel'
+  fullPaths: '/' | '/auth' | '/cardapio' | '/mesas' | '/painel'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/auth' | '/cardapio' | '/painel'
+  to: '/' | '/auth' | '/cardapio' | '/mesas' | '/painel'
   id:
     | '__root__'
     | '/'
     | '/_authenticated'
     | '/auth'
     | '/_authenticated/cardapio'
+    | '/_authenticated/mesas'
     | '/_authenticated/painel'
   fileRoutesById: FileRoutesById
 }
@@ -110,6 +120,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedCardapioRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/mesas': {
+      id: '/_authenticated/mesas'
+      path: '/mesas'
+      fullPath: '/mesas'
+      preLoaderRoute: typeof AuthenticatedMesasRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/painel': {
       id: '/_authenticated/painel'
       path: '/painel'
@@ -122,11 +139,13 @@ declare module '@tanstack/react-router' {
 
 interface AuthenticatedRouteRouteChildren {
   AuthenticatedCardapioRoute: typeof AuthenticatedCardapioRoute
+  AuthenticatedMesasRoute: typeof AuthenticatedMesasRoute
   AuthenticatedPainelRoute: typeof AuthenticatedPainelRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedCardapioRoute: AuthenticatedCardapioRoute,
+  AuthenticatedMesasRoute: AuthenticatedMesasRoute,
   AuthenticatedPainelRoute: AuthenticatedPainelRoute,
 }
 
