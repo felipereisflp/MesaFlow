@@ -58,30 +58,14 @@ const ROLES = [
 type Role = (typeof ROLES)[number]["value"] | "owner";
 
 function Painel() {
-  const navigate = useNavigate();
   const qc = useQueryClient();
   const fetchMe = useServerFn(getMyContext);
 
   const me = useQuery({ queryKey: ["me"], queryFn: () => fetchMe({ data: undefined }) });
 
-  async function sair() {
-    await supabase.auth.signOut();
-    qc.clear();
-    navigate({ to: "/auth" });
-  }
-
   return (
     <div className="min-h-screen bg-background">
-      <header className="border-b border-border">
-        <div className="mx-auto flex max-w-5xl items-center justify-between px-6 py-4">
-          <span className="font-display text-lg font-bold tracking-tight text-foreground">
-            Mesa<span className="text-primary">Flow</span>
-          </span>
-          <Button variant="ghost" size="sm" onClick={sair}>
-            <LogOut className="mr-2 h-4 w-4" /> Sair
-          </Button>
-        </div>
-      </header>
+      <StaffHeader />
 
       <main className="mx-auto max-w-5xl space-y-6 px-6 py-8">
         {me.isLoading ? (
