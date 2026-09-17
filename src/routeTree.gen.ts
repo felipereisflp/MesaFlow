@@ -12,9 +12,12 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as AuthRouteImport } from './routes/auth'
+import { Route as AuthenticatedBarRouteImport } from './routes/_authenticated/bar'
 import { Route as AuthenticatedCardapioRouteImport } from './routes/_authenticated/cardapio'
+import { Route as AuthenticatedCozinhaRouteImport } from './routes/_authenticated/cozinha'
 import { Route as AuthenticatedMesasRouteImport } from './routes/_authenticated/mesas'
 import { Route as AuthenticatedPainelRouteImport } from './routes/_authenticated/painel'
+import { Route as AuthenticatedSalaoRouteImport } from './routes/_authenticated/salao'
 import { Route as MTokenRouteImport } from './routes/m.$token'
 
 const IndexRoute = IndexRouteImport.update({
@@ -31,9 +34,19 @@ const AuthRoute = AuthRouteImport.update({
   path: '/auth',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthenticatedBarRoute = AuthenticatedBarRouteImport.update({
+  id: '/bar',
+  path: '/bar',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 const AuthenticatedCardapioRoute = AuthenticatedCardapioRouteImport.update({
   id: '/cardapio',
   path: '/cardapio',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedCozinhaRoute = AuthenticatedCozinhaRouteImport.update({
+  id: '/cozinha',
+  path: '/cozinha',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
 const AuthenticatedMesasRoute = AuthenticatedMesasRouteImport.update({
@@ -46,6 +59,11 @@ const AuthenticatedPainelRoute = AuthenticatedPainelRouteImport.update({
   path: '/painel',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedSalaoRoute = AuthenticatedSalaoRouteImport.update({
+  id: '/salao',
+  path: '/salao',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 const MTokenRoute = MTokenRouteImport.update({
   id: '/m/$token',
   path: '/m/$token',
@@ -55,17 +73,23 @@ const MTokenRoute = MTokenRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
+  '/bar': typeof AuthenticatedBarRoute
   '/cardapio': typeof AuthenticatedCardapioRoute
+  '/cozinha': typeof AuthenticatedCozinhaRoute
   '/mesas': typeof AuthenticatedMesasRoute
   '/painel': typeof AuthenticatedPainelRoute
+  '/salao': typeof AuthenticatedSalaoRoute
   '/m/$token': typeof MTokenRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
+  '/bar': typeof AuthenticatedBarRoute
   '/cardapio': typeof AuthenticatedCardapioRoute
+  '/cozinha': typeof AuthenticatedCozinhaRoute
   '/mesas': typeof AuthenticatedMesasRoute
   '/painel': typeof AuthenticatedPainelRoute
+  '/salao': typeof AuthenticatedSalaoRoute
   '/m/$token': typeof MTokenRoute
 }
 export interface FileRoutesById {
@@ -73,24 +97,48 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/auth': typeof AuthRoute
+  '/_authenticated/bar': typeof AuthenticatedBarRoute
   '/_authenticated/cardapio': typeof AuthenticatedCardapioRoute
+  '/_authenticated/cozinha': typeof AuthenticatedCozinhaRoute
   '/_authenticated/mesas': typeof AuthenticatedMesasRoute
   '/_authenticated/painel': typeof AuthenticatedPainelRoute
+  '/_authenticated/salao': typeof AuthenticatedSalaoRoute
   '/m/$token': typeof MTokenRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/auth' | '/cardapio' | '/mesas' | '/painel' | '/m/$token'
+  fullPaths:
+    | '/'
+    | '/auth'
+    | '/bar'
+    | '/cardapio'
+    | '/cozinha'
+    | '/mesas'
+    | '/painel'
+    | '/salao'
+    | '/m/$token'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/auth' | '/cardapio' | '/mesas' | '/painel' | '/m/$token'
+  to:
+    | '/'
+    | '/auth'
+    | '/bar'
+    | '/cardapio'
+    | '/cozinha'
+    | '/mesas'
+    | '/painel'
+    | '/salao'
+    | '/m/$token'
   id:
     | '__root__'
     | '/'
     | '/_authenticated'
     | '/auth'
+    | '/_authenticated/bar'
     | '/_authenticated/cardapio'
+    | '/_authenticated/cozinha'
     | '/_authenticated/mesas'
     | '/_authenticated/painel'
+    | '/_authenticated/salao'
     | '/m/$token'
   fileRoutesById: FileRoutesById
 }
@@ -124,11 +172,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated/bar': {
+      id: '/_authenticated/bar'
+      path: '/bar'
+      fullPath: '/bar'
+      preLoaderRoute: typeof AuthenticatedBarRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/cardapio': {
       id: '/_authenticated/cardapio'
       path: '/cardapio'
       fullPath: '/cardapio'
       preLoaderRoute: typeof AuthenticatedCardapioRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/cozinha': {
+      id: '/_authenticated/cozinha'
+      path: '/cozinha'
+      fullPath: '/cozinha'
+      preLoaderRoute: typeof AuthenticatedCozinhaRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/mesas': {
@@ -145,6 +207,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedPainelRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/salao': {
+      id: '/_authenticated/salao'
+      path: '/salao'
+      fullPath: '/salao'
+      preLoaderRoute: typeof AuthenticatedSalaoRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/m/$token': {
       id: '/m/$token'
       path: '/m/$token'
@@ -156,15 +225,21 @@ declare module '@tanstack/react-router' {
 }
 
 interface AuthenticatedRouteRouteChildren {
+  AuthenticatedBarRoute: typeof AuthenticatedBarRoute
   AuthenticatedCardapioRoute: typeof AuthenticatedCardapioRoute
+  AuthenticatedCozinhaRoute: typeof AuthenticatedCozinhaRoute
   AuthenticatedMesasRoute: typeof AuthenticatedMesasRoute
   AuthenticatedPainelRoute: typeof AuthenticatedPainelRoute
+  AuthenticatedSalaoRoute: typeof AuthenticatedSalaoRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedBarRoute: AuthenticatedBarRoute,
   AuthenticatedCardapioRoute: AuthenticatedCardapioRoute,
+  AuthenticatedCozinhaRoute: AuthenticatedCozinhaRoute,
   AuthenticatedMesasRoute: AuthenticatedMesasRoute,
   AuthenticatedPainelRoute: AuthenticatedPainelRoute,
+  AuthenticatedSalaoRoute: AuthenticatedSalaoRoute,
 }
 
 const AuthenticatedRouteRouteWithChildren =

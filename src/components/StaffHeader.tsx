@@ -6,6 +6,9 @@ import { LogOut } from "lucide-react";
 
 const NAV = [
   { to: "/painel", label: "Painel" },
+  { to: "/salao", label: "Salão" },
+  { to: "/cozinha", label: "Cozinha" },
+  { to: "/bar", label: "Bar" },
   { to: "/cardapio", label: "Cardápio" },
   { to: "/mesas", label: "Mesas e QR" },
 ] as const;
